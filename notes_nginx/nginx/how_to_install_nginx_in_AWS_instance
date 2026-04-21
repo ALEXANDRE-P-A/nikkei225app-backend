@@ -1,0 +1,20 @@
+https://zenn.dev/shz/articles/9ee6891fad7a0e
+
+・接続後、まずパッケージリストを更新します。これにより、最新のパッケージ情報が取得されます。
+sudo yum update -y
+
+・nginxをインストールする
+sudo dnf -y install nginx
+
+・nginxを起動する
+sudo systemctl start nginx
+
+・nginxが正常に動作しているか確認
+sudo systemctl status nginx
+
+・nginxの自動起動を設定
+sudo systemctl enable nginx
+
+・セキュリティグループに以下のルールが存在することを確認
+タイプ: HTTP, ポート範囲: 80, ソース: マイIP
+タイプ: HTTPS, ポート範囲: 443, ソース: マイIP

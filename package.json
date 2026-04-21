@@ -1,0 +1,21 @@
+{
+  "name": "nikkei225app-backend",
+  "version": "1.0.0",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "keywords": [],
+  "author": "Alexandre Pereira Assano",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.13.6",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "ip": "^2.0.1",
+    "mongodb": "^7.1.1",
+    "node-cron": "^4.2.1"
+  }
+}
