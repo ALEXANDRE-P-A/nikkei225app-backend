@@ -17,7 +17,9 @@ import {
   getTickers
 } from "./init/nikkei225_required_collections.mjs";
 
-// mainProcess();
+cron.schedule("45 17 * * 1-5", _ => {
+  mainProcess();
+});
 
 const PORT  = 3000;
 
