@@ -27,6 +27,8 @@ import {
   setTickersToObj
 } from '../init/nikkei225_required_collections.mjs';
 
+import { addTextToNotificationMsg, sendEmail } from '../mail/nodemailer.mjs';
+
 let completedItemsCount = 0;
 let totalItemsCount = 0;
 let isLoadingFlag = false;
@@ -44,6 +46,7 @@ const getCompletedPercentage = _ => `${(completedItemsCount/totalItemsCount*100)
 
 const downloadTickersDataFromJQuants = async tradingDay => {
 
+  let maFlagTrueCount = 0;
   let tickersArray = [];
   let s17Array = [];
   let s33Array = [];
@@ -71,7 +74,10 @@ const downloadTickersDataFromJQuants = async tradingDay => {
       then maFlag is TRUE
       otherwise false
     -------------------------- */
-    const maFlag = await calculateMA(ticker, tradingDay);    
+    const maFlag = await calculateMA(ticker, tradingDay);  
+    
+    if(maFlag)
+      maFlagTrueCount++;
 
     const data = {
       code: ticker,
@@ -107,6 +113,7 @@ const downloadTickersDataFromJQuants = async tradingDay => {
   s33Array = deduplicationS33;
 
   console.log(`DONE! downloaded ${totalItemsCount} tickers data from J-quants SUCCESSFULLY`);
+  addTextToNotificationMsg(`Downloaded ${totalItemsCount} tickers data from J-quants with ${maFlagTrueCount} ticker with TRUE flag SUCCESSFULLY.\n`);
 
   completedItemsCount = 0;
   totalItemsCount = 0;
@@ -128,12 +135,16 @@ const mainProcess = async _ => {
   if(tradingDayDatabase === tradingDayJQuants){
     await getSectorsFromDatabase();
     await getTickersFromDatabase();
+    await addTextToNotificationMsg(`Tickers data is already the latest\n\n`);
   } else {
     await setTradingDayToObj(tradingDayJQuants);
     await dropExistingDatabase();
     await downloadTickersDataFromJQuants(tradingDayJQuants);
     await createDatabase();
   }
+
+  await addTextToNotificationMsg(`Alexandre PA Nikkei225 App`);
+  await sendEmail();
 };
 
 export {

@@ -12,6 +12,7 @@ import {
   nikkei225_db_name, 
   nikkei225CollectionsObj 
 } from "../init/nikkei225_required_collections.mjs";
+import { addTextToNotificationMsg } from "../mail/nodemailer.mjs";
 
 config();
 
@@ -41,6 +42,8 @@ const createDocuments = async _ => {
     }
   } catch(e) {
     console.error("(mgdb-u*5) Error", e);
+    addTextToNotificationMsg(`(mgdb-u*5) Error\n\n${e}`);
+    await client.close();
   };
 };
 
@@ -65,6 +68,8 @@ const createCollections = async _ => {
     await createDocuments(); // (mgdb-u*5)
   } catch(e) {
     console.error("(mgdb-u*4) Error", e);
+    addTextToNotificationMsg(`(mgdb-u*4) Error\n\n${e}`);
+    await client.close();
   };
 };
 
@@ -79,6 +84,8 @@ const createDatabase = async _ => {
     await createCollections(); // (mgdb-u*4)
   } catch (e) {
     console.error("(mgdb-u*3) Error", e);
+    addTextToNotificationMsg(`(mgdb-u*3) Error\n\n${e}`);
+    await client.close();
   };
 };
 
@@ -94,6 +101,8 @@ const dropExistingDatabase = async _ => {
     console.log("Database dropped:", result); // 成功した場合はtrue
   } catch(e) {
     console.error("(mgdb-u*2) Error", e);
+    addTextToNotificationMsg(`(mgdb-u*2) Error\n\n${e}`);
+    await client.close();
   };
 };
 
@@ -113,6 +122,8 @@ const checkDatabaseExists = async _ => {
   
   } catch(e) {
     console.error("(mgdb-u*1) Error", e);
+    addTextToNotificationMsg(`(mgdb-u*1) Error\n\n${e}`);
+    await client.close();
   };
 }
 

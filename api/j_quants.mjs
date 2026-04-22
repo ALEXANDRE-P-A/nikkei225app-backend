@@ -10,6 +10,7 @@ import axios from "axios";
 import { config } from "dotenv";
 import { setTimeout } from 'timers/promises';
 import { getToday, getDayBehind } from "../functions/functions.mjs";
+import { addTextToNotificationMsg } from "../mail/nodemailer.mjs";
 
 config();
 
@@ -37,6 +38,7 @@ const getTradingDayFromJQuants = async num => {
     return concattedSplittedLastTradingDay;
   } catch(e) {
     console.error("(jq*1) Error", e);
+    addTextToNotificationMsg(`(jq*1) Error\n\n${e}`);
   };
 };
 
@@ -52,6 +54,7 @@ const getMasterInfo = async (ticker, day) => {
     return result.data.data[0];
   } catch(e) {
     console.error("(jq*2) Error", e);
+    addTextToNotificationMsg(`(jq*2) Error\n\n${e}`);
   }
 };
 
@@ -67,6 +70,7 @@ const getLastDailyInfo = async (ticker, day) => {
     return result.data.data;
   } catch(e) {
     console.error("(jq*3) Error", e);
+    addTextToNotificationMsg(`(jq*3) Error\n\n${e}`);
   }
 };
 
@@ -83,6 +87,7 @@ const getHistoricalDailyInfo = async (ticker, toDay) => {
     return array.data.data;
   } catch(e) {
     console.error("(jq*4) Error", e);
+    addTextToNotificationMsg(`(jq*4) Error\n\n${e}`);
   }
 };
 

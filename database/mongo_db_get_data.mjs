@@ -17,6 +17,7 @@ import {
   setTradingDayToObj,
   setTickersToObj,
 } from "../init/nikkei225_required_collections.mjs";
+import { addTextToNotificationMsg } from "../mail/nodemailer.mjs";
 
 config();
 
@@ -42,6 +43,7 @@ const getTradingDayFromDatabase = async _ => {
     return doc.value;
   } catch(e) {
     console.log("(mgdb-g*1) Error", e);
+    addTextToNotificationMsg(`(mgdb-g*1) Error\n\n${e}`);
     await client.close();
   };
 };
@@ -56,6 +58,7 @@ const getTickerCodesFromDatabase = async _ => {
     return doc.value;
   } catch(e) {
     console.log("(mgdb-g*2) Error", e);
+    addTextToNotificationMsg(`(mgdb-g*2) Error\n\n${e}`);
     await client.close();
   };
 };
@@ -71,6 +74,7 @@ const getSectorsFromDatabase = async _ => {
     await setSectorsToObj(doc1.value, doc2.value)
   } catch(e) {
     console.log("(mgdb-g*3) Error", e);
+    addTextToNotificationMsg(`(mgdb-g*3) Error\n\n${e}`);
     await client.close();
   };
 };
@@ -85,6 +89,7 @@ const getTickersFromDatabase = async _ => {
     await setTickersToObj(doc.value);
   } catch(e) {
     console.log("(mgdb-g*4) Error", e);
+    addTextToNotificationMsg(`(mgdb-g*4) Error\n\n${e}`);
     await client.close();
   };
 };

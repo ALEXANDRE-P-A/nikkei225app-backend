@@ -4,6 +4,22 @@ const ticker_db_name = "tickers_db";
 const ticker_collection_name = "tickers";
 const ticker_doc_name = "nikkei225";
 
+const now = new Date();
+const options = {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit", // 不要ならこの行を削除
+  hour12: false       // 24時間表示
+};
+
+const formatted = new Intl.DateTimeFormat("ja-JP", options).format(now);
+const updatedAt = `${formatted} (JST)`;
+// 出力例: 2026/04/22 20:48:00
+
 const nikkei225CollectionsObj = [
   { // [0]
     name: "access-history",
@@ -17,7 +33,7 @@ const nikkei225CollectionsObj = [
     doc: {
       name: "trading_day",
       value: "",
-      updatedAt: new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })
+      updatedAt
     }
   },
   { // [2]
@@ -25,12 +41,12 @@ const nikkei225CollectionsObj = [
     doc1: {
       name: "s17",
       value: "",
-      updatedAt: new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })
+      updatedAt
     },
     doc2: {
       name: "s33",
       value: "",
-      updatedAt: new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })
+      updatedAt
     }
   },
   { // [3]
@@ -38,7 +54,7 @@ const nikkei225CollectionsObj = [
     doc: {
       name: "nikkei225",
       value: "",
-      updatedAt: new Date().toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })
+      updatedAt
     }
   }
 ];

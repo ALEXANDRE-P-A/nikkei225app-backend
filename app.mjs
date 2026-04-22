@@ -17,6 +17,8 @@ import {
   getTickers
 } from "./init/nikkei225_required_collections.mjs";
 
+import { sendEmail } from "./mail/nodemailer.mjs";
+
 cron.schedule("45 17 * * 1-5", _ => {
   mainProcess();
 });
